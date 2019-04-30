@@ -1,28 +1,30 @@
 package com.example.gummy.hello.presenter;
 
+import com.example.gummy.hello.contract.MainContract;
 import com.example.gummy.hello.model.User;
-import com.example.gummy.hello.view.ILoginView;
 
-public class LoginPresenter implements ILoginPresenter {
+public class LoginPresenter implements MainContract.Presenter {
 
-    private ILoginView loginView;
+    private MainContract.View mLoginView; // view
 
-    public LoginPresenter(ILoginView loginView) {
-        this.loginView = loginView;
+    // Set view in the constructor
+    public LoginPresenter(MainContract.View mLoginView) {
+        this.mLoginView = mLoginView;
     }
 
+    // When button is pressed validate the data and return correct response
     @Override
     public void onLogin(String email, String password) {
         User user = new User(email,password);
         int loginCode = user.isValidData();
 
         if (loginCode == 0)
-            loginView.onLoginResult("Enter an email address");
+            mLoginView.onLoginResult("Enter an email address");
         else if (loginCode == 1)
-            loginView.onLoginResult("Enter a valid email address");
+            mLoginView.onLoginResult("Enter a valid email address");
         else if (loginCode == 2)
-            loginView.onLoginResult("Password must be over 6 characters");
+            mLoginView.onLoginResult("Password must be over 6 characters");
         else
-            loginView.onLoginResult("Success");
+            mLoginView.onLoginResult("Success");
     }
 }

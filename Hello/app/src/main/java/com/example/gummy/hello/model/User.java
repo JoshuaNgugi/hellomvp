@@ -3,7 +3,12 @@ package com.example.gummy.hello.model;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-public class User implements IUser{
+import com.example.gummy.hello.contract.MainContract;
+
+/*
+ * Model class to define how the data is structured
+ */
+public class User implements MainContract.Model {
     private String email, password;
 
     public User(String email, String password) {
@@ -29,7 +34,7 @@ public class User implements IUser{
          * 1. Check email pattern
          * 2. Check password length > 6
          */
-        if (!TextUtils.isEmpty(getEmail()))
+        if (TextUtils.isEmpty(getEmail()))
             return 0;
         else if (!Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches())
             return 1;
