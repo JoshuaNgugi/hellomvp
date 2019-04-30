@@ -5,7 +5,7 @@ import com.example.gummy.hello.view.ILoginView;
 
 public class LoginPresenter implements ILoginPresenter {
 
-    ILoginView loginView;
+    private ILoginView loginView;
 
     public LoginPresenter(ILoginView loginView) {
         this.loginView = loginView;
@@ -14,11 +14,15 @@ public class LoginPresenter implements ILoginPresenter {
     @Override
     public void onLogin(String email, String password) {
         User user = new User(email,password);
-        boolean isLogginSuccess = user.isValidData();
+        int loginCode = user.isValidData();
 
-        if (isLogginSuccess)
-            loginView.onLoginResult("Login Success");
+        if (loginCode == 0)
+            loginView.onLoginResult("Enter an email address");
+        else if (loginCode == 1)
+            loginView.onLoginResult("Enter a valid email address");
+        else if (loginCode == 2)
+            loginView.onLoginResult("Password must be over 6 characters");
         else
-            loginView.onLoginResult("Login Failed");
+            loginView.onLoginResult("Success");
     }
 }
